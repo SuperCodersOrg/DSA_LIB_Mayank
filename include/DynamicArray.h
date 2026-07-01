@@ -4,7 +4,8 @@
 #include<iostream>
 #include <utility>
 #include "Allocator.h"
-using namepsace std;
+
+
 template <typename T>
 class DynamicArray{
 private:
@@ -34,7 +35,7 @@ public:
     }
 
     DynamicArray(size_t n){
-        size=n;
+        size=0;
         capacity=n;
         data = allocator.Allocate(capacity);
         for(size_t i=0;i<n;i++){
@@ -136,9 +137,9 @@ public:
 
     void print() {
         for (size_t i = 0; i < size; i++) {
-            cout << data[i] << " ";
+            std::cout<< data[i] << " ";
         }
-        cout << "\n";
+        std::cout << "\n";
     }
     
     ~DynamicArray(){
