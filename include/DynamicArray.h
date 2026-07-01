@@ -81,6 +81,16 @@ public:
         size++;
     }
 
+    void remove(size_t index){ 
+        if(index >= size){ 
+            throw std::out_of_range("Invalid index"); 
+        } 
+        allocator.Destroy(data + index); 
+        for (size_t i = index; i < size - 1; i++) { 
+            allocator.Construct(data + i, std::move(data[i + 1])); 
+            allocator.Destroy(data + i + 1); 
+        } size--; 
+    }
 
     ~DynamicArray(){
         for(size_t i=0;i<size;i++){
