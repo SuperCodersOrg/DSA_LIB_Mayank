@@ -58,6 +58,28 @@ public:
         size++;
     }
 
+    size_t get_size() const{
+        return size;
+    }
+
+    size_t get_capacity() const{
+        return capacity;
+    }
+
+    void insert(size_t index,const T& value){
+        if (index > size) {
+        throw std::out_of_range("Invalid index");
+        }
+        if(size==capacity){
+            resize();
+        }
+        for(size_t i=size;i>index;i--){
+            allocator.Construct(data + i, std::move(data[i - 1]));
+            allocator.Destroy(data + i - 1);
+        }
+        allocator.Construct(data + index, value);
+        size++;
+    }
 
 
     ~DynamicArray(){
