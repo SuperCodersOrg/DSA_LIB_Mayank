@@ -29,9 +29,9 @@ class LinkedList{
         LinkedList(std::initializer_list<T> init){
             head=nullptr;
             tail=nullptr;
+            length=0;
             for(const T& value:init){
                 push_back(value);
-                length++;
             }
         }
         void push_front(const T& value){
@@ -63,6 +63,57 @@ class LinkedList{
                 tail=newnode;
             }
             length++;
+        }
+
+        int size(){
+            return length;
+        }
+
+        bool isEmpty(){
+            return head==nullptr;
+        }
+
+        T& front(){
+            return head->data;
+        }
+
+        const T& front()const{
+            return head->data;
+        }
+
+        T& back(){
+            return tail->data;
+        }
+
+        const T& back()const{
+            return tail->data;
+        }
+
+        T& operator [](size_t index){
+            if (index >= length) throw std::out_of_range("Index out of range");
+            Node* temp=head;
+            size_t i=0;
+            while(i<=index){
+                if(i==index){
+                    return temp->data;
+                }
+                i++;
+                temp=temp->next;
+            }
+
+        }
+        const T& operator [](size_t index)const {
+            if (index >= length) throw std::out_of_range("Index out of range");
+            Node* temp=head;
+            size_t i=0;
+            while(i<=index){
+                if(i==index){
+                    return temp->data;
+                }
+                i++;
+                temp=temp->next;
+            }
+
         }
 
         void print(){
