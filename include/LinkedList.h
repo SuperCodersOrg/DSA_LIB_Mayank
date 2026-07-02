@@ -26,6 +26,14 @@ class LinkedList{
             tail=nullptr;
             length=0;
         }
+        LinkedList(std::initializer_list<T> init){
+            head=nullptr;
+            tail=nullptr;
+            for(const T& value:init){
+                push_back(value);
+                length++;
+            }
+        }
         void push_front(const T& value){
             Node* newnode = allocator.Allocate();
             allocator.Construct(newnode,value);
