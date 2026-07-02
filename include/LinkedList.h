@@ -123,18 +123,25 @@ class LinkedList{
         }
 
         T& front(){
+            if(head == nullptr) throw std::out_of_range("List is empty");
             return head->data;
         }
 
-        const T& front()const{
+        const T& front() const {
+            if(head == nullptr)
+                throw std::out_of_range("List is empty");
             return head->data;
         }
 
-        T& back(){
+        T& back() {
+            if(tail == nullptr)
+                throw std::out_of_range("List is empty");
             return tail->data;
         }
 
-        const T& back()const{
+        const T& back() const {
+            if(tail == nullptr)
+                throw std::out_of_range("List is empty");
             return tail->data;
         }
 
@@ -278,6 +285,24 @@ class LinkedList{
                 temp = temp->next;
             }
         }
+
+        LinkedList& operator=(const LinkedList& other){
+            if(this == &other){
+                return *this;
+            }
+
+            clear();
+
+            Node* temp = other.head;
+
+            while(temp != nullptr){
+                push_back(temp->data);
+                temp = temp->next;
+            }
+
+            return *this;
+        }
+        
         ~LinkedList(){
             clear();
         }
