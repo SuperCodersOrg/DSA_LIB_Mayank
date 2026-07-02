@@ -1,7 +1,6 @@
 # Build Log – Session 1
 
-**Date:** 2 July 2026
-
+**Date:** 2 July 2026 | **Time:** 10:00 - 12:00
 ## Objective
 
 After successfully completing my custom `DynamicArray<T>` implementation using a custom allocator and manual object lifetime management, I began implementing the next data structure in my library: a generic `LinkedList<T>`.
