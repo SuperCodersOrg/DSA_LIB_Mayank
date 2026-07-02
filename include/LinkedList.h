@@ -91,6 +91,12 @@ class LinkedList{
 
         T& operator [](size_t index){
             if (index >= length) throw std::out_of_range("Index out of range");
+            if(index==0){
+                return head->data;
+            }
+            if(index==length-1){
+                return tail->data;
+            }
             Node* temp=head;
             size_t i=0;
             while(i<=index){
@@ -104,6 +110,12 @@ class LinkedList{
         }
         const T& operator [](size_t index)const {
             if (index >= length) throw std::out_of_range("Index out of range");
+            if(index==0){
+                return head->data;
+            }
+            if(index==length-1){
+                return tail->data;
+            }
             Node* temp=head;
             size_t i=0;
             while(i<=index){
@@ -115,6 +127,8 @@ class LinkedList{
             }
 
         }
+
+
 
         void print(){
             Node* temp=head;
