@@ -38,9 +38,6 @@ public:
         size=0;
         capacity=n;
         data = allocator.Allocate(capacity);
-        for(size_t i=0;i<n;i++){
-            allocator.Construct(data+i);
-        }
 
     }
 
