@@ -29,7 +29,16 @@ class HashMap{
             return key%currentCapacity;
         }
 
-        
+        Entry* findEntry(const K&  key){
+            size_t index=bucketIndex(key);
+            for(auto it = buckets[index].begin(); it != buckets[index].end(); ++it){
+                if((*it).key == key)
+                {
+                    return &(*it);
+                }
+            }
+            return nullptr;
+        }
         public:
             HashMap(){
                 currentCapacity=8;
