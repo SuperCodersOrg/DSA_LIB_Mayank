@@ -21,6 +21,27 @@ class LinkedList{
         Node* tail;
         int length;
     public:
+        class Iterator{
+            private:
+                Node* current;
+            public:
+                Iterator(Node* ptr){
+                    current=ptr;
+                }
+                T& operator*(){
+                    return current->data;
+                }
+                Iterator& operator++(){
+                    current=current->next;
+                    return *this;
+                }
+                bool operator!=(const Iterator& other){
+                    return current != other.current;
+                }
+                bool operator==(const Iterator& other){
+                    return current == other.current;
+                }
+        };
         LinkedList(){
             head=nullptr;
             tail=nullptr;
@@ -301,6 +322,13 @@ class LinkedList{
             }
 
             return *this;
+        }
+        Iterator begin(){
+            return Iterator(head);
+        }
+
+        Iterator end(){
+            return Iterator(nullptr);
         }
         
         ~LinkedList(){
