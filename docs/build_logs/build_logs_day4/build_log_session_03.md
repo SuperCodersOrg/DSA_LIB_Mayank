@@ -1,6 +1,6 @@
-# Design Journal
+# Build Log
 
- * *Date: * * 4 July 2026
+**Date:** 4 July 2026 | **Time:** 4:00 - 5:30
 
 ## Session 3 – HashMap Feature Completion and Comprehensive Testing
 
@@ -36,7 +36,7 @@ Implemented a simple helper function that checks whether the map currently store
 
 Implemented removal of key-value pairs.
 
-The algorithm:
+The algorithm
 
  - Computes the bucket index.
 
