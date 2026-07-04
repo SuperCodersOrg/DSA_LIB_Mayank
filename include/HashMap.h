@@ -142,6 +142,20 @@ class HashMap{
         }
         return false;
     }
+    
+    void clear(){
+        for(int i = 0; i < capacity; i++){
+            auto& bucket = buckets[i];
+
+            while(!bucket.isEmpty()){
+                Entry* entry = bucket.remove(0);
+                allocator.Destroy(entry);
+                allocator.Deallocate(entry);
+            }
+        }
+
+        size = 0;
+    }
 
     void print(){
         std::cout<<std::endl;
