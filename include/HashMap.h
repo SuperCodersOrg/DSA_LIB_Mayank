@@ -172,6 +172,46 @@ class HashMap{
         size = 0;
     }
 
+    // K* getKeys(){
+    //     // DynamicArray<K> keys(size);
+    //     MyAllocator<K> keyallocator;
+    //     K* keys=keyallocator.Allocate(size);
+    //     int index=0;
+    //     for(int i = 0; i < capacity; i++){
+    //         for(auto it = buckets[i].begin(); it != buckets[i].end(); ++it){
+    //             Entry* entry = *it;
+    //             keyallocator.Construct(keys+index,entry->key);
+    //             index++;
+    //         }
+    //     }
+
+    //     return keys;
+    // }
+     DynamicArray<K> getKeys(){
+        DynamicArray<K> Keys(size);
+
+        for(int i = 0; i < capacity; i++){
+            for(auto it = buckets[i].begin(); it != buckets[i].end(); ++it){
+                Entry* entry = *it;
+                Keys.append(entry->key);
+            }
+        }
+
+        return Keys;
+    }
+    DynamicArray<V> getValues(){
+        DynamicArray<V> values(size);
+
+        for(int i = 0; i < capacity; i++){
+            for(auto it = buckets[i].begin(); it != buckets[i].end(); ++it){
+                Entry* entry = *it;
+                values.append(entry->value);
+            }
+        }
+
+        return values;
+    }
+
     void print(){
         std::cout<<std::endl;
         for(int i=0;i<capacity;i++){
@@ -184,8 +224,8 @@ class HashMap{
     }
     
     HashMap& operator=(const HashMap& other){
-        if(this == &other)
-            return *this;
+        if(this == &other) return *this;
+        
         clear();
         buckets.clear();
 
@@ -193,16 +233,12 @@ class HashMap{
         size = 0;
         MAX_LOAD_FACTOR = other.MAX_LOAD_FACTOR;
 
-        for(int i = 0; i < capacity; i++)
-        {
+        for(int i = 0; i < capacity; i++){
             buckets.append(LinkedList<Entry*>());
         }
 
-        for(int i = 0; i < capacity; i++)
-        {
-            for(auto it = other.buckets[i].begin();
-                it != other.buckets[i].end();
-                ++it)
+        for(int i = 0; i < capacity; i++){
+            for(auto it = other.buckets[i].begin();it != other.buckets[i].end();++it)
             {
                 Entry* entry = *it;
                 put(entry->key, entry->value);
