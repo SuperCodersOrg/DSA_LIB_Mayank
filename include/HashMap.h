@@ -32,7 +32,7 @@ class HashMap{
     }
 
     void rehash(){
-        std::cout<<"Rehash"<<std::endl;
+        // std::cout<<"Rehash"<<std::endl;
         int oldCapacity=capacity;
         int newCapacity=oldCapacity*2;
         capacity=capacity*2;
@@ -53,7 +53,7 @@ class HashMap{
     public:
     
     HashMap():buckets(8){
-        std::cout<<"constructor called"<<std::endl;
+        // std::cout<<"constructor called"<<std::endl;
         size=0;
         capacity=8;
         for(int i=0;i<capacity;i++){
@@ -61,7 +61,7 @@ class HashMap{
         }
     }
 
-    HashMap(const HashMap& other): buckets(other.capacity){
+    HashMap(HashMap& other): buckets(other.capacity){
         size = 0;
         capacity = other.capacity;
         MAX_LOAD_FACTOR = other.MAX_LOAD_FACTOR;
@@ -97,7 +97,7 @@ class HashMap{
         allocator.Construct(newEntry,key,value);
         bucket.push_back(newEntry);
         size++;
-        std::cout<<std::endl;
+        // std::cout<<std::endl;
         if(loadFactor()>0.75){
             rehash();
         }
@@ -223,7 +223,7 @@ class HashMap{
         }
     }
     
-    HashMap& operator=(const HashMap& other){
+    HashMap& operator=(HashMap& other){
         if(this == &other) return *this;
         
         clear();
@@ -249,7 +249,7 @@ class HashMap{
     }
 
     ~HashMap(){
-        std::cout<<"Destructor called";
+        // std::cout<<"Destructor called";
         for (int i = 0; i < capacity; i++){
             for (auto it = buckets[i].begin(); it != buckets[i].end(); ++it){
                 Entry* entry = *it;
