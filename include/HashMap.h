@@ -23,7 +23,7 @@ class HashMap{
     DynamicArray<LinkedList<Entry*>> buckets;
     MyAllocator<Entry> allocator;
 
-    size_t hash(const K& key){
+    size_t hash(const K& key)const{
         return key%capacity;
     }
 
@@ -88,7 +88,7 @@ class HashMap{
         }
     }
 
-    const V get(const K& key){
+    V& get(const K& key){
         int bucket_index=hash(key);
         auto& bucket=buckets[bucket_index];
 
@@ -98,7 +98,49 @@ class HashMap{
                 return (entry->value);
             }
         }
-        return "Not found";
+        throw std::out_of_range("Key not found");
+    }
+
+    bool containsKey(const K& key){
+        int bucket_index=hash(key);
+        auto& bucket=buckets[bucket_index];
+
+        for(auto it=bucket.begin(); it!=bucket.end();++it){
+            Entry *entry=*it;
+            if(entry->key  == key){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool isEmpty() const{
+        return size == 0;
+    }
+
+    bool remove(const K& key){
+        int bucket_index=hash(key);
+        auto& bucket=buckets[bucket_index];
+        int index=0;
+
+        for (auto it = bucket.begin(); it != bucket.end(); ++it){
+            Entry* entry = *it;
+
+            if (entry->key == key)
+            {
+                Entry* removedEntry = bucket.remove(index);
+
+                allocator.Destroy(removedEntry);
+                allocator.Deallocate(removedEntry);
+
+                size--;
+
+                return true;
+            }
+
+            index++;
+        }
+        return false;
     }
 
     void print(){
