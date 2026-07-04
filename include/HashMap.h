@@ -1,128 +1,57 @@
 #pragma once
 
 #include"./LinkedList.h"
+#include"./DynamicArray.h"
 #include"./Allocator.h"
+#include<iostream>
 
 template<typename K, typename V>
 class HashMap{
     private:
-        class Entry{
-            public:
-                K key;
-                V value;
-                Entry(const K& k, const V& v){
-                    key=k;
-                    value=v;
-                }   
-        };
-        LinkedList<Entry>* buckets;
-        size_t currentSize;
-        size_t currentCapacity;
-        double MAX_LOAD_FACTOR = 0.75;
-        MyAllocator<LinkedList<Entry>> allocator;
-
-        double loadFactor(){
-            return (static_cast<double>(currentSize)/currentCapacity);
-        }
-
-        size_t bucketIndex(const K& key){
-            return key%currentCapacity;
-        }
-
-        Entry* findEntry(const K&  key){
-            size_t index=bucketIndex(key);
-            for(auto it = buckets[index].begin(); it != buckets[index].end(); ++it){
-                if((*it).key == key)
-                {
-                    return &(*it);
-                }
-            }
-            return nullptr;
-        }
-        const Entry* findEntry(const K& key)const{
-            size_t index=bucketIndex(key);
-            for(auto it = buckets[index].begin(); it != buckets[index].end(); ++it){
-                if((*it).key == key)
-                {
-                    return &(*it);
-                }
-            }
-            return nullptr;
-        }
-
-        void rehash(){
-            // Save old data
-            LinkedList<Entry>* oldBuckets = buckets;
-            size_t oldCapacity = currentCapacity;
-
-            // Double capacity
-            currentCapacity *= 2;
-
-            // Allocate new buckets
-            buckets = allocator.Allocate(currentCapacity);
-
-            for(size_t i = 0; i < currentCapacity; i++)
-            {
-                allocator.Construct(&buckets[i]);
-            }
-
-            // Reset size
-            currentSize = 0;
-
-            // Move every entry to new buckets
-            for(size_t i = 0; i < oldCapacity; i++)
-            {
-                for(auto it = oldBuckets[i].begin(); it != oldBuckets[i].end(); ++it)
-                {
-                    insert((*it).key, (*it).value);
-                }
-            }
-
-            // Destroy old buckets
-            for(size_t i = 0; i < oldCapacity; i++)
-            {
-                allocator.Destroy(&oldBuckets[i]);
-            }
-
-            allocator.Deallocate(oldBuckets);
-        }
-        
+    class Entry{
         public:
-            HashMap(){
-                currentCapacity=8;
-                currentSize=0;
-                buckets = allocator.Allocate(currentCapacity);
-                for (size_t i = 0; i < currentCapacity; i++){
-                    allocator.Construct(&buckets[i]);
-                }
+        K key;
+        V value;
+        Entry(const K& key,const V& value){
+            this->key=key;
+            this->value=value;
+        }
+    };
+    int size;
+    int capacity;
+    double MAX_LOAD_FACTOR=0.75;
+    DynamicArray<LinkedList<Entry*>> buckets;
+    MyAllocator<Entry> allocator;
+
+    size_t hash(const K& key){
+        return key%capacity;
+    }
+    public:
+    HashMap():buckets(8){
+        std::cout<<"constructor called";
+        size=0;
+        capacity=8;
+        for(int i=0;i<capacity;i++){
+            buckets.append(LinkedList<Entry*>());
+        }
+    }
+
+    void put(const K& key, const V& value){
+        int bucket_index=hash(key);
+        
+    }
+
+    ~HashMap(){
+        std::cout<<"Destructor called";
+        for (int i = 0; i < capacity; i++){
+            for (auto it = buckets[i].begin(); it != buckets[i].end(); ++it){
+                Entry* entry = *it;
+
+                allocator.Destroy(entry);
+                allocator.Deallocate(entry);
             }
-            void insert(const K& key, const V& value){
-                Entry* existing = findEntry(key);
+        }
+    }
 
-                if(existing != nullptr)
-                {
-                    existing->value = value;
-                    return;
-                }
 
-                size_t index = bucketIndex(key);
-
-                Entry entry(key, value);
-
-                buckets[index].push_back(entry);
-
-                currentSize++;
-
-                if(loadFactor() > MAX_LOAD_FACTOR)
-                {
-                    rehash();
-                }
-            }
-            ~HashMap(){
-                for (size_t i = 0; i < currentCapacity; i++){
-                    allocator.Destroy(&buckets[i]);
-                }
-
-                allocator.Deallocate(buckets);
-            }
 };
