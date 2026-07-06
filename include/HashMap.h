@@ -3,6 +3,7 @@
 #include"./LinkedList.h"
 #include"./DynamicArray.h"
 #include"./Allocator.h"
+#include"./Myhash.h"
 #include<iostream>
 
 template<typename K, typename V>
@@ -24,7 +25,7 @@ class HashMap{
     MyAllocator<Entry> allocator;
 
     size_t hash(const K& key)const{
-        return key%capacity;
+        return MyHash::hash(key) % capacity;
     }
 
     double loadFactor(){
