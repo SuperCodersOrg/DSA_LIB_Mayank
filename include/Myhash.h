@@ -2,30 +2,66 @@
 
 #include <string>
 
-class MyHash {
+template<typename T>
+class MyHash;
+
+template<>
+class MyHash<int>
+{
 public:
-
-    static size_t hash(int key) {
+    size_t operator()(const int& key) const
+    {
         return key;
     }
+};
 
-    static size_t hash(long key) {
+template<>
+class MyHash<long>
+{
+public:
+    size_t operator()(const long& key) const
+    {
         return key;
     }
+};
 
-    static size_t hash(char key) {
+
+template<>
+class MyHash<char>
+{
+public:
+    size_t operator()(const char& key) const
+    {
         return key;
     }
+};
 
-    static size_t hash(float key) {
+template<>
+class MyHash<float>
+{
+public:
+    size_t operator()(const float& key) const
+    {
         return static_cast<size_t>(key * 1000);
     }
+};
 
-    static size_t hash(double key) {
+template<>
+class MyHash<double>
+{
+public:
+    size_t operator()(const double& key) const
+    {
         return static_cast<size_t>(key * 1000000);
     }
+};
 
-    static size_t hash(const std::string& key) {
+template<>
+class MyHash<std::string>
+{
+public:
+    size_t operator()(const std::string& key) const
+    {
         size_t h = 0;
 
         for(char c : key)

@@ -6,7 +6,7 @@
 #include"./Myhash.h"
 #include<iostream>
 
-template<typename K, typename V>
+template<typename K, typename V, typename Hash=MyHash<K>>
 class HashMap{
     private:
     class Entry{
@@ -23,9 +23,9 @@ class HashMap{
     double MAX_LOAD_FACTOR=0.75;
     DynamicArray<LinkedList<Entry*>> buckets;
     MyAllocator<Entry> allocator;
-
+    Hash hasher;
     size_t hash(const K& key)const{
-        return MyHash::hash(key) % capacity;
+        return hasher(key) % capacity;
     }
 
     double loadFactor(){
