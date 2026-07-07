@@ -1,4 +1,3 @@
-````md
 # Daily Journal
 
 **Date:** 3 July 2026
