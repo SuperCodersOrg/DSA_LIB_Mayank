@@ -1,6 +1,3 @@
-```md
-# Design Journal
-
 **Date:** 3 July 2026 | **Time:** 4:00 - 6:00
 
 ## Session 2 – HashMap Foundation and Iterator Support

@@ -1,5 +1,3 @@
-# Design Journal
-
 **Date:** 3 July 2026 | **Time:** 09:00 - 11:00
 
 ---
